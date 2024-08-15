@@ -30,7 +30,7 @@
 
 @section('body-content')
 
- <!-- Banner section start [Done] -->
+ <!-- Banner section start -->
  <section class="banner-section">
     <div class="container">
       <div class="banner-poster">
@@ -68,7 +68,7 @@
 <!-- Banner section end -->
 
 
-<!-- About section start [Done] -->
+<!-- About section start -->
 <section class="about-section pb-0">
     <div class="container">
         <div class="row align-items-center">
@@ -112,7 +112,8 @@
 </section>
 <!-- About section start -->
 
-<!-- Category section start [Done] -->
+
+<!-- Category section start -->
 <section class="category-section pb-0">
     <div class="container">
     <div class="row">
@@ -139,7 +140,7 @@
 <!-- Category section end -->
 
 
-<!-- service section start [Done] -->
+<!-- service section start -->
 <section class="service-section pb-0" id="service">
     <div class="container">
         <div class="row">
@@ -213,7 +214,7 @@
 <!-- service section end -->
 
 
-<!-- pricelist section start [Done]  -->
+<!-- pricelist section start -->
 <section class="pricelist_section pb-0" id="price">
     <div class="container">
         <div class="row">
@@ -263,7 +264,7 @@
 <!-- pricelist section end -->
 
 
-<!-- pro-service section start [Done] -->
+<!-- pro-service section start -->
 <section class="pro-service-section">
   <div class="container">
       <div class="pro-service-container">
@@ -311,7 +312,7 @@
 <!-- pro-service section end -->
 
 
-<!-- Projects section start [Done] -->
+<!-- Projects section start -->
 <section class="project-section" id="project">
   <div class="container">
       <div class="row">
@@ -330,7 +331,7 @@
 <!-- Projects section end -->
 
 
-<!-- Safety section start [Done] -->
+<!-- Safety section start -->
 <section class="safty-section">
   <div class="container">
       <div class="row align-items-center">
