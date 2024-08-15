@@ -326,9 +326,9 @@ header {
 
 .category-details {}
 
+/*Note*/
 .category-details h1 {
     text-align: center;
-    text-decoration: underline;
     margin-bottom: 40px;
 }
 
@@ -346,8 +346,10 @@ header {
     border-radius: 4px;
 }
 
+/*Note*/
 .category-wise img {
-    width: 45px;
+    width: 50px;
+    height: 50px;
 }
 
 .category-wise h5 {
@@ -388,9 +390,9 @@ header {
 
 .service-container {}
 
+/*Note*/
 .service-container h1 {
     text-align: center;
-    text-decoration: underline;
     margin-bottom: 40px;
 }
 
@@ -407,10 +409,12 @@ header {
     background-color: #F4F4F4;
 }
 
+/*Note*/
 .service-list .service-details img {
     border-top-right-radius: 12px;
     border-top-left-radius: 12px;
     width: 100%;
+    height: 320px;
 }
 
 .service-content {
@@ -522,8 +526,8 @@ header {
     text-align: center;
 }
 
+/*Note*/
 .price_head h1 {
-    text-decoration: underline;
     margin-bottom: 40px;
 }
 
