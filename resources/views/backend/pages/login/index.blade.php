@@ -78,7 +78,7 @@
 
                 <div class="mb-3">
                   <label for="email" class="form-label">Email or Username</label>
-                  <input  type="email" name="email" value={{ old('email') }} required autofocus
+                  <input  type="email" name="email" value='example@gmail.com' required autofocus
                     autocomplete="username" class="form-control"
                     placeholder="Enter your email or username" />
 

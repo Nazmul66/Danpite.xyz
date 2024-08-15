@@ -31,16 +31,28 @@
                          <a class="nav-link" href="{{ asset('/pricing') }}">Price</a>
                        </li>
                        <li class="nav-item">
-                         <a class="nav-link" href="{{ asset('/project') }}">Projects</a>
+                          <a class="nav-link" href="{{ asset('/project') }}">Projects</a>
                        </li>
                         <li class="nav-item">
-                         <a class="nav-link" href="{{ asset('/blog') }}">Blogs</a>
+                           <a class="nav-link" href="{{ asset('/blog') }}">Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="{{ asset('/contact') }}">Contact Us</a>
                         </li>
                      </ul>
 
                       <div class="searching-products">
                           <button>
-                            <a href="{{ asset('/contact') }}">Contact</a>
+                              @if ( !Auth::check() )
+                                <a href="{{ url('/login') }}">Login</a>
+
+                              @else
+                                <form method="POST" action="{{ route('logout') }}">
+                                   @csrf
+
+                                   <a href="{{ url('/login') }}" onclick="event.preventDefault();  this.closest('form').submit();">LogOut</a>
+                                </form>
+                              @endif
                           </button>
                       </div>
                    </div>
