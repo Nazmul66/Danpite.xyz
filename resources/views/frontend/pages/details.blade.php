@@ -37,7 +37,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <img src="{{ asset($service_detail->service_img) }}" alt="" style="width:100%;border-radius:6px;">
+                <img src="{{ asset($service_detail->service_img) }}" alt="" style="width:100%; height: 500px; border-radius:6px;">
             </div>
 
             <div class="col-lg-5 offset-lg-1">
