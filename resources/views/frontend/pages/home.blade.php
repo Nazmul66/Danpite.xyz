@@ -577,6 +577,20 @@
  </section>
 <!-- Contact section end -->
 
+<!-- Google Map section start -->
+<section class="map_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="google_map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31999841.42796559!2d75.06392800515421!3d11.748795449339859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11e122bbe121%3A0xb59c61ae785ac91!2sDanpite%20pte%20Ltd!5e0!3m2!1sen!2sbd!4v1723100262575!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Google Map section end -->
+
 @endsection
 
 
@@ -594,7 +608,7 @@
         autoplay: true,
         nav: true,
         dots: true,
-        autoplayTimeout: 5000,
+        autoplayTimeout: 2000,
         autoplayHoverPause: true,
         responsive:{
             0:{
