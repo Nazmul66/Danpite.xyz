@@ -38,6 +38,21 @@
         </ul>
       </li>
 
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bxs-layout"></i>
+          <div data-i18n="Layouts">Support Service</div>
+        </a>
+
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{{ route('admin.support-service.index') }}" class="menu-link">
+              <div data-i18n="Without menu">Manage Support Service</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+
 
       <!--  Logo Section  -->
       <li class="menu-item">

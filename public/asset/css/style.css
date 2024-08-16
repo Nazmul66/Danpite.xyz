@@ -2015,3 +2015,52 @@ footer {
 /*=========================
    End Contact Us CSS
 ===========================*/
+
+
+
+
+
+
+/*=========================
+        ChatBot CSS
+===========================*/
+.chatbot_service{
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 1111;
+}
+.chatbot_service .msg_chat{
+   width: 75px;
+   height: 75px;
+   border-radius: 50%;
+   cursor: pointer;
+}
+.chatbot_service .form_submission{
+    position: absolute;
+    left: -140px;
+    top: -142px;
+    width: 320px;
+    background: #FFF;
+    transform: scale(0, 0);
+    opacity: 0;
+    visibility: hidden;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+.chatbot_service .form_submission.chat_active{
+    left: -280px;
+    top: -320px;
+    transform: scale(1, 1);
+    opacity: 1;
+    visibility: visible;
+}
+.form_submission .message_cross{
+    position: absolute;
+    top: 8px;
+    right: 14px;
+    font-size: 34px;
+    cursor: pointer;
+}

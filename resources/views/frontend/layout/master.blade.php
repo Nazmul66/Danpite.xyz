@@ -26,9 +26,9 @@
         @include('frontend.include.footer')
     <!-- Footer section end -->
 
-    <a href="https://wa.me/{{ App\Models\Basicinfo::first()->whatsapp }}?text=I%20am%20interested" target="_blank" style="position: fixed;bottom: 10px;right: 6px;z-index:1111">
-        <img src="{{asset('public/whatsapp.png')}}" style="height:75px;border-radius:50%">
-    </a>
+
+    @include('frontend.include.others')
+    
     
     @include('frontend.include.script')
 
