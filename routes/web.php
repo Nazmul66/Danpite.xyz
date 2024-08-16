@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\ContactController;
+use App\Http\Controllers\Backend\SupportServiceController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,17 +30,18 @@ Route::view('/pricing', 'frontend.pages.static_pages.pricing');
 Route::view('/privacy-policy', 'frontend.pages.static_pages.privacy_policy');
 Route::view('/terms-condition', 'frontend.pages.static_pages.terms_condition');
 Route::view('/faq', 'frontend.pages.static_pages.faq');
+Route::post('support-service', [SupportServiceController::class, 'SupportService'])->name('support.service');
 Route::post('contact-now', [InformationController::class, 'contact'])->name('contact.store');
 Route::get('/search', [InformationController::class, 'search']);
 
 Route::get('give/react/{slug}', [InformationController::class, 'givereact']);
 
 Route::get('/details/{id}', function ($id) {
-    $service_detail          = Service::where('id', $id)->first();
-    $pricePlan_details       = PricePlan::where('service_id', $id)->get();
-    $project_details         = Project::where('service_id', $id)->get();
-    $meterials         = ServiceInfo::where('service_id', $id)->where('type', 'material')->get();
-    $procedures         = ServiceInfo::where('service_id', $id)->where('type', 'procedure')->get();
+    $service_detail        = Service::where('id', $id)->first();
+    $pricePlan_details     = PricePlan::where('service_id', $id)->get();
+    $project_details       = Project::where('service_id', $id)->get();
+    $meterials             = ServiceInfo::where('service_id', $id)->where('type', 'material')->get();
+    $procedures            = ServiceInfo::where('service_id', $id)->where('type', 'procedure')->get();
     return view('frontend.pages.details', compact('id', 'service_detail', 'pricePlan_details', 'project_details','meterials','procedures'));
 })->name('service.details');
 

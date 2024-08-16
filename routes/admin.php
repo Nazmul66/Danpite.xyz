@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\SupportServiceController;
 use App\Http\Controllers\Backend\LogoController;
 use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\ReviewController;
@@ -88,10 +89,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['Is_admin', 'auth']], functi
     //____ Professional  ____//
     Route::resource('professional', ProfessionalController::class)->names('admin.professional');
 
-
     //____ About  ____//
     Route::resource('about', AboutController::class)->names('admin.about');
 
     //____ Safety  ____//
     Route::resource('safety', SafetyController::class)->names('admin.safety');
+
+    //____ Support Service  ____//
+    Route::resource('support-service', SupportServiceController::class)->names('admin.support-service');
+    Route::get('/get-support-service', [SupportServiceController::class, 'getData'])->name('admin.get.support-service');
+    Route::post('/support-service/status', [SupportServiceController::class, 'adminSupportServiceStatus'])->name('admin.support-service.status');
 });
