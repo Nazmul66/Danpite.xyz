@@ -264,7 +264,7 @@
 <!-- pricelist section end -->
 
 
-<!-- pro-service section start -->
+{{-- <!-- pro-service section start -->
 <section class="pro-service-section">
   <div class="container">
       <div class="pro-service-container">
@@ -309,7 +309,7 @@
       </div>
   </div>
 </section>
-<!-- pro-service section end -->
+<!-- pro-service section end --> --}}
 
 
 <!-- Projects section start -->
