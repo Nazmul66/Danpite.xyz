@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e263293446a4ef5d3efcfacecd1810f",
+    "content-hash": "5ba716afd7e67be74e648caf814035df",
     "packages": [
         {
             "name": "brick/math",
@@ -1504,16 +1504,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.5.2",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767"
+                "reference": "b650144166dfa7703e62a22e493b853b58d874b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
-                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/b650144166dfa7703e62a22e493b853b58d874b0",
+                "reference": "b650144166dfa7703e62a22e493b853b58d874b0",
                 "shasum": ""
             },
             "require": {
@@ -1526,8 +1526,8 @@
             },
             "require-dev": {
                 "cebe/markdown": "^1.0",
-                "commonmark/cmark": "0.31.0",
-                "commonmark/commonmark.js": "0.31.0",
+                "commonmark/cmark": "0.31.1",
+                "commonmark/commonmark.js": "0.31.1",
                 "composer/package-versions-deprecated": "^1.8",
                 "embed/embed": "^4.4",
                 "erusev/parsedown": "^1.0",
@@ -1606,7 +1606,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-14T10:56:57+00:00"
+            "time": "2024-08-16T11:46:16+00:00"
         },
         {
             "name": "league/config",
@@ -6721,16 +6721,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v11.1.3",
+            "version": "v11.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "78ecbc43025a24b92c307664c0cf395fea56c215"
+                "reference": "178a25d9668ac822bc9b57f2dc1ea3abfb66ca96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/78ecbc43025a24b92c307664c0cf395fea56c215",
-                "reference": "78ecbc43025a24b92c307664c0cf395fea56c215",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/178a25d9668ac822bc9b57f2dc1ea3abfb66ca96",
+                "reference": "178a25d9668ac822bc9b57f2dc1ea3abfb66ca96",
                 "shasum": ""
             },
             "require": {
@@ -6798,7 +6798,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables/issues",
-                "source": "https://github.com/yajra/laravel-datatables/tree/v11.1.3"
+                "source": "https://github.com/yajra/laravel-datatables/tree/v11.1.4"
             },
             "funding": [
                 {
@@ -6806,7 +6806,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-15T04:47:52+00:00"
+            "time": "2024-08-17T03:57:36+00:00"
         }
     ],
     "packages-dev": [
