@@ -30,7 +30,9 @@ Route::view('/pricing', 'frontend.pages.static_pages.pricing');
 Route::view('/privacy-policy', 'frontend.pages.static_pages.privacy_policy');
 Route::view('/terms-condition', 'frontend.pages.static_pages.terms_condition');
 Route::view('/faq', 'frontend.pages.static_pages.faq');
+
 Route::post('support-service', [SupportServiceController::class, 'SupportService'])->name('support.service');
+
 Route::post('contact-now', [InformationController::class, 'contact'])->name('contact.store');
 Route::get('/search', [InformationController::class, 'search']);
 
