@@ -4,8 +4,8 @@
     <!-- owl Carousel Link -->
      <script src="{{ asset('public/plugin/js/owl.carousel.min.js') }}"></script>
 
-    <!-- AOS CDN Link -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Sweet Alert Link -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Sweet alert CDN Link -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -135,3 +135,14 @@
 
 
     @stack('script-tag')
+
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+
+

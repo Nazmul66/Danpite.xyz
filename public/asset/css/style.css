@@ -2076,7 +2076,7 @@ footer {
     transform: translate(-50%, -30px);
     width: 95%;
     margin: 0 auto;
-    height: 80px;
+    height: 130px;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease-in-out;
@@ -2089,12 +2089,12 @@ footer {
 .reaction_section .comment_field .comment_box_field{
     width: 100%;
     border: 1px solid #f1f1f1f1;
-    height: 82px;
+    height: 130px;
     border-radius: 8px;
     outline: none;
     display: block;
     box-shadow: 0px 0px 19px rgba(0, 0, 0, 0.25);
-    padding: 10px;
+    padding: 10px 44px 11px 22px;
 }
 .reaction_section .comment_field .remove_comment{
     position: absolute;
@@ -2136,6 +2136,11 @@ footer {
     padding: 20px 24px 0;
     border-bottom: 1px solid #f1f1f1;
 }
+.client_comment_title{
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 24px;
+}
 .comment_show .comment_content{
     display: flex;
     margin-bottom: 24px;
@@ -2152,14 +2157,28 @@ footer {
     margin-left: 28px;
 }
 .comment_show .comment_content .comment_description h3{
-    font-size: 20px;
-    margin-bottom: 8px;
+    font-size: 24px;
+    margin-bottom: 2px;
+}
+.comment_show .comment_content .comment_description span{
+    color: #666;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 12px;
 }
 .comment_show .comment_content .comment_description p{
     color: #666;
-    font-size: 14px;
+    font-size: 15px;
 }
-
+.btn_comment_send{
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    border: none;
+    background: #23B14D;
+    color: #FFF;
+    border-radius: 4px;
+}
 
 /*=========================
         ChatBot CSS

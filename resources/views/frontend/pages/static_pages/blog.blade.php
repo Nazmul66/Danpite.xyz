@@ -31,39 +31,12 @@ background-size: cover;">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 offset-lg-3">
-                    {{-- @if ( $blogPages->count() > 0 )
-                        @foreach ($blogPages as $blogPage)
-                            <div class="col-lg-6 col-md-6 mb-5">
-                                <div class="blog-item">
-                                    <div class="blog-thumb">
-                                        <a href="{{ route('single.blog', $blogPage->slug) }}" >
-                                            <img src="{{ asset($blogPage->image) }}" alt="" class="img-fluid" style="border-radius: 8px;">
-                                        </a>
-                                    </div>
-
-                                    <div class="blog-item-content">
-                                        <div class="blog-item-meta mb-3 mt-4">
-                                            <span class="text-black text-capitalize mr-3"><i class="icofont-calendar mr-1"></i>{{$blogPage->created_at->diffForHumans()}}</span>
-                                        </div>
-
-                                        <h2 class="mt-3 mb-3"><a href="{{ route('single.blog', $blogPage->slug) }}" >{{ $blogPage->title }}</a></h2>
-
-                                        <p class="mb-4">{!! $blogPage->short_description !!}</p>
-
-                                        <a href="{{ route('single.blog', $blogPage->slug) }}" class="btn btn-main btn-icon btn-round-full">Read More <i class="icofont-simple-right ml-2  "></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                       @endforeach
-                    @else
-                        <div class="alert alert-danger text-center" role="alert">There is no blog post here!</div>
-                    @endif --}}
-
                     <div class="main_blog_content_section">
 
                       @if ( $blogPages->count() > 0 )
                         @foreach ($blogPages as $blogPage)
                             <div class="single_blog_content">
+
                                 {{-- Part-1 --}}
                                 <div class="blog_thumb">
                                     <div class="blog_content">
@@ -104,12 +77,19 @@ background-size: cover;">
                                     </ul>
 
                                     <div class="comment_field">
-                                        <form action="">
-                                            <textarea name="comment_box" id="comment_box" data-id={{ $blogPage->id }} class="comment_box_field" placeholder="Comment Here....."></textarea>
+                                        <form class="create_comment" method="POST">
+                                            @csrf
+
+                                            <input type="text" name="blog_id" value="{{ $blogPage->id }}" hidden>
+                                            <input type="text" name="blog_id" value="{{ $blogPage->id }}" hidden>
+
+                                            <textarea name="comment" id="comment" class="comment_box_field" placeholder="Comment Here....."></textarea>
 
                                             <div class="remove_comment">
                                                 <i class='bx bx-x'></i>
                                             </div>
+
+                                            <button type="submit" class="btn_comment_send"><i class='bx bxs-send'></i></button>
                                         </form>
                                     </div>
 
@@ -117,14 +97,22 @@ background-size: cover;">
 
                                 {{-- Part-4 --}}
                                 <div class="comment_show">
-                                    <div class="comment_content">
-                                        <img src="{{ asset('public/asset/images/avatar.png') }}" alt="">
+                                    @foreach ($blogComments as $blogComment)
+                                           @if ( $blogComment->blog_ids == $blogPage->id )
+                                                <div class="comment_content">
+                                                    <img src="{{ asset('public/asset/images/avatar.png') }}" alt="">
 
-                                        <div class="comment_description">
-                                            <h3>Client Name</h3>
-                                            <p>User Comments Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos excepturi, illo deserunt fugiat voluptas quae porro esse, sit consequatur id molestias unde perferendis alias eos?</p>
-                                        </div>
-                                    </div>
+                                                    <div class="comment_description">
+                                                        <h3>{{ ucwords($blogComment->name) }}</h3>
+                                                        <span>{{ Carbon\Carbon::parse($blogComment->created_at)->diffForHumans() }}</span>
+                                                        <p>{{ $blogComment->comment }}</p>
+                                                    </div>
+                                                </div>
+                                           @endif
+                                        {{-- </div> --}}
+                                    @endforeach
+
+
                                 </div>
                             </div>
                          @endforeach
@@ -143,14 +131,44 @@ background-size: cover;">
 
 <script>
    $(document).ready(function(){
-      $(document).on('input','#comment_box', function(){
-          let id = $(this).attr('data-id');
-          let val = $(this).val();
-          console.log(id, val);
+      $(document).on('submit', '.create_comment',function (e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+        // console.log(formData);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('blog.comments') }}",
+                data: formData,
+                processData: false,  // Prevent jQuery from processing the data
+                contentType: false,  // Prevent jQuery from setting contentType
+                success: function (res) {
+                    // console.log(res);
+                    if (res.status == true) {
+                        swal.fire(
+                        {
+                            title: `Successfully Comments`,
+                            icon: 'success'
+                        })
+
+                        $('.create_comment')[0].reset();
+                        window.location.reload();
+
+                    } else {
+                        window.location.href= "{{ route('login') }}";
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+
+            })
       });
    })
 
 
+    // Toggle
     let comment_line    = document.querySelectorAll('.comment_line');
     let comment_field   = document.querySelectorAll('.comment_field');
     let remove_comment   = document.querySelectorAll('.remove_comment');

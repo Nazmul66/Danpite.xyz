@@ -195,6 +195,7 @@
 
     let editorInstance;
 
+    // update Price
     ClassicEditor
         .create(document.querySelector('#up_price_desc'))
         .then(newEditor => {
@@ -204,7 +205,7 @@
             console.error(error);
     });
 
-
+    // Create Price
     ClassicEditor
         .create(document.querySelector('#price_desc'))
         .then(newEditor => {

@@ -4,11 +4,11 @@ use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\SupportServiceController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Frontend\BlogController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Service;
 use App\Models\PricePlan;
 use App\Models\Project;
-use App\Models\Blogpage;
 use App\Models\ServiceInfo;
 
 
@@ -18,11 +18,6 @@ Route::get('/', function () {
 
 Route::view('/about', 'frontend.pages.static_pages.about');
 Route::view('/contact', 'frontend.pages.static_pages.contact');
-Route::view('/blog', 'frontend.pages.static_pages.blog');
-Route::get('/blogs/{slug}', function ($slug) {
-    $singleBlog = Blogpage::where('slug', $slug)->first();
-    return view('frontend.pages.static_pages.singleBlog', compact('singleBlog'));
-})->name('single.blog');
 Route::view('/project', 'frontend.pages.static_pages.project');
 Route::view('/service', 'frontend.pages.static_pages.service');
 Route::get('/category/{slug}', [InformationController::class, 'categoryservice']);
@@ -38,6 +33,15 @@ Route::get('/search', [InformationController::class, 'search']);
 
 Route::get('give/react/{slug}', [InformationController::class, 'givereact']);
 
+
+// Blog
+Route::get('/blog', [BlogController::class, 'index']);
+// Route::get('/blog/comment/show', [BlogController::class, 'blogCommentShow'])->name('blog.comment.show');
+Route::get('/blogs/{slug}', [BlogController::class, 'blogDetails'])->name('single.blog');
+Route::post('/blogs/comments', [BlogController::class, 'blogComments'])->name('blog.comments');
+
+
+// Service Details
 Route::get('/details/{id}', function ($id) {
     $service_detail        = Service::where('id', $id)->first();
     $pricePlan_details     = PricePlan::where('service_id', $id)->get();
