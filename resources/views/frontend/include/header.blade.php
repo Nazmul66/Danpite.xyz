@@ -1,64 +1,30 @@
-<header>
-    <div class="container">
-       <div class="row">
-          {{-- <div class="col-lg-12"> --}}
-             <nav class="navbar navbar-expand-lg">
-                 <div class="container-fluid">
-                   <a class="navbar-brand" href="{{ url('/') }}">
+<header id="header" style="z-index: 99999999">
+    <div class="container-fluid">
 
-                        @if ( !empty($basicInfo->logo) )
-                            <img src="{{ asset($basicInfo->logo) }}" alt="" style="width: 200px;">
-                        @else
-                            <img src="{{ asset('public/asset/images/logo.png') }}" alt="" style="width: 200px;">
-                        @endif
-                   </a>
+        <div id="logo" class="pull-left">
+            <a href="{{ url('/') }}"><img src="{{asset($setting->logo)}}" alt="" title="" style="width: 150px;margin-top: -10px;" /></a>
+        </div>
 
-                   <!-- Mobile button toggle -->
-                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                     <span class="navbar-toggler-icon"></span>
-                   </button>
-
-
-                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                       <li class="nav-item">
-                         <a class="nav-link" aria-current="page" href="{{ asset('/') }}">Home</a>
-                       </li>
-                       <li class="nav-item">
-                         <a class="nav-link" href="{{ asset('/service') }}">Services</a>
-                       </li>
-                       <li class="nav-item">
-                         <a class="nav-link" href="{{ asset('/pricing') }}">Price</a>
-                       </li>
-                       <li class="nav-item">
-                          <a class="nav-link" href="{{ asset('/project') }}">Projects</a>
-                       </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="{{ asset('/blog') }}">Blogs</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="{{ asset('/contact') }}">Contact Us</a>
-                        </li>
-                     </ul>
-
-                      <div class="searching-products">
-                          <button>
-                              @if ( !Auth::check() )
-                                <a href="{{ url('/login') }}">Login</a>
-
-                              @else
-                                <form method="POST" action="{{ route('logout') }}">
-                                   @csrf
-
-                                   <a href="{{ url('/login') }}" onclick="event.preventDefault();  this.closest('form').submit();">LogOut</a>
-                                </form>
-                              @endif
-                          </button>
-                      </div>
-                   </div>
-                 </div>
-               </nav>
-          {{-- </div> --}}
-       </div>
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-has-children"><a href="">Services</a>
+                    <ul>
+                        <li><a href="{{ url('all-services') }}">All Services</a></li>
+                        <li><a href="{{ url('interior') }}">Interior Painting</a></li>
+                    </ul>
+                </li>
+                <li class="menu-has-children"><a href="">Pricing</a>
+                    <ul>
+                        <li><a href="{{ url('priceing') }}">Pricing List</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ url('daily-blogs') }}">Blog</a></li>
+                <li><a href="{{ url('contact-us') }}">Contact Us</a></li>
+                <li id="limt">
+                    <p class="m-0 p-0" style="color: #FAD105;font-size: 12px;">for appointment or query</p>
+                    <a href="" style="padding-left:0px;font-size: 20px;color: #FAD105;">{{ App\Models\Websetting::first()->phone_one }}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </header>

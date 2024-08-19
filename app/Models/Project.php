@@ -9,8 +9,8 @@ class Project extends Model
 {
     use HasFactory;
 
-    static public function getData()
+    public function projectcategories()
     {
-        return self::where('status', '1')->inRandomOrder()->take(6)->get();
+        return $this->belongsTo(Projectcategory::class, 'category_id');
     }
 }

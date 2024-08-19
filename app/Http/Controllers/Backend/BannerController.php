@@ -3,158 +3,147 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Banner;
-use DataTables;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class BannerController extends Controller
 {
-       /**
+    /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
-        return view('backend.pages.banner.index');
+        return view('backend.content.banner.index');
     }
 
-    public function getData(Request $request)
+    public function bannerdata()
     {
         $banners = Banner::all();
 
-        // dd($categories);
-
-        return DataTables::of($banners)
-             ->addIndexColumn()
-             ->addColumn('banner_img', function ($banner) {
-                return '<img src="'. asset($banner->banner_img) .'" alt="" style="width: 65px;">';
-             })
-             ->addColumn('status', function ($banner) {
-                if ($banner->status == 1) {
-                    return '<span class="badge bg-label-primary cursor-pointer" id="status" data-id="'.$banner->id.'" data-status="'.$banner->status.'">Active</span>';
-                } else {
-                    return '<span class="badge bg-label-danger cursor-pointer" id="status" data-id="'.$banner->id.'" data-status="'.$banner->status.'">Deactive</span>';
-                }
-            })
+        return datatables()->of($banners)
             ->addColumn('action', function ($banner) {
-                return '
-                <div class="">
-                    <button type="button" class="btn_edit" id="editButton" data-id="' . $banner->id . '" data-bs-toggle="modal" data-bs-target="#editModal">
-                        <i class="bx bx-edit-alt"></i>
-                    </button>
-
-                    <button type="button" id="deleteBtn" data-id="' . $banner->id . '" class="btn_delete">
-                        <i class="bx bx-trash"></i>
-                    </button>
-                </div>';
+                return '<a href="#" type="button" id="editBannerBtn" data-id="'.$banner->id.'"   class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editBanner">Edit</a>
+                <a href="#" type="button" id="deleteBannerBtn" data-id="'.$banner->id.'" data-status="'.$banner->status.'" class="btn btn-danger btn-sm" >Delete</a>';
             })
-
-            ->rawColumns(['banner_img', 'status', 'action'])
             ->make(true);
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $banner = new Banner();
+        $banner->banner_title = $request->banner_title;
+        $banner->banner_btn_text = $request->banner_btn_text;
+        $banner->banner_btn_link = $request->banner_btn_link;
 
-        $banner->title         = $request->title;
-        $banner->status        = $request->status;
-
-        if( $request->file('banner_img') ){
-            $banner_img = $request->file('banner_img');
-
-            $imageName          = microtime('.') . '.' . $banner_img->getClientOriginalExtension();
-            $imagePath          = 'public/backend/image/banner/';
-            $banner_img->move($imagePath, $imageName);
-
-            $banner->banner_img   = $imagePath . $imageName;
+        if ($request->hasFile('banner_image')) {
+            $bannerimage = $request->file('banner_image');
+            $name = time()."_".$bannerimage->getClientOriginalName();
+            $uploadPath = ('public/images/banner/');
+            $bannerimage->move($uploadPath, $name);
+            $bannerimageImgUrl = $uploadPath.$name;
+            $banner->banner_image = $bannerimageImgUrl;
         }
 
         $banner->save();
-
-        return response()->json(['message' => 'successfully Banner Created', 'status' => true], 200);
+        return response()->json($banner, 200);
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param  \App\Models\Banner  $banner
+     * @return \Illuminate\Http\Response
      */
-    public function adminBannerStatus(Request $request)
+    public function show(Banner $banner)
     {
-        $id = $request->id;
-        $Current_status = $request->status;
-
-        if ($Current_status == 1) {
-            $status = 0;
-        } else {
-            $status = 1;
-        }
-
-        $page = Banner::find($id);
-        $page->status = $status;
-        $page->save();
-
-        return response()->json(['message' => 'success', 'status' => $status, ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Banner  $banner
+     * @return \Illuminate\Http\Response
      */
-    public function edit(string $id)
+    public function edit(Banner $banner)
     {
-        $banner = Banner::find($id);
-        return response()->json(['success' => $banner]);
+        return response()->json($banner, 200);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Banner  $banner
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Banner $banner)
     {
-        // dd($request->all());
-
-        $banner = Banner::find($id);
-
-        $banner->title         = $request->title;
-        $banner->status        = $request->status;
-
-        if( $request->file('banner_img') ){
-            $banner_img = $request->file('banner_img');
-
-            if( !is_null($banner->banner_img) && file_exists($banner->banner_img) ){
-                unlink($banner->banner_img);
-             }
-
-            $imageName          = microtime('.') . '.' . $banner_img->getClientOriginalExtension();
-            $imagePath          = 'public/backend/image/banner/';
-            $banner_img->move($imagePath, $imageName);
-
-            $banner->banner_img   = $imagePath . $imageName;
+        
+        $banner->banner_title = $request->banner_title;
+        $banner->banner_btn_text = $request->banner_btn_text;
+        $banner->banner_btn_link = $request->banner_btn_link;
+        
+        if ($request->hasFile('banner_image')) {
+            
+            $bannerimage = $request->file('banner_image');
+            $name = time()."_".$bannerimage->getClientOriginalName();
+            $uploadPath = ('public/images/banner/');
+            $bannerimage->move($uploadPath, $name);
+            $bannerimageImgUrl = $uploadPath.$name;
+            $banner->banner_image = $bannerimageImgUrl;
         }
-
-        $banner->save();
-
-        return response()->json(['message'=> "success"], 200);
+        $banner->update();
+        return response()->json($banner, 200);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Banner  $banner
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(string $id)
+    public function destroy(Banner $banner)
     {
-        $banner = Banner::find($id);
-
-        if ( !is_null($banner->banner_img) ) {
-            if (file_exists($banner->banner_img)) {
-                unlink($banner->banner_img);
-            }
-        }
-
         $banner->delete();
+        
+        if ($banner->banner_image) {
+            
+            if (file_exists($banner->banner_image))
+            {
+                unlink($banner->banner_image);
+            }
+            
+        }
+        
+        return response()->json($banner, 200);
+    }
 
-        return response()->json(['message' => 'Banner has been deleted.'], 200);
+    public function statusupdate(Request $request)
+    {
+        $banner= Banner::where('id',$request->banner_id)->first();
+
+        $banner->status= $request->status;
+        $banner->update();
+        return response()->json($banner, 200);
     }
 }
