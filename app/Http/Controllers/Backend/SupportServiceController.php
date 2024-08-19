@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SupportService;
 use Yajra\DataTables\Facades\DataTables;
+use Exception;
 
 
 class SupportServiceController extends Controller
@@ -25,7 +26,9 @@ class SupportServiceController extends Controller
     public function SupportService(Request $request)
     {
         // dd($request->all());
-        $supportService = new SupportService();
+        try
+        {
+            $supportService = new SupportService();
 
         $supportService->name     =  $request->name;
         $supportService->email    =  $request->email;
@@ -33,8 +36,15 @@ class SupportServiceController extends Controller
         $supportService->status   =  1;
 
         $supportService->save();
-        
+
         return response()->json(['message' => 'Thank you for supporting us', 'status' => true], 200);
+
+        }
+        catch(Exception $e)
+        {
+            return response()->json(['message' => $e->getMessage(), 'status' => false], 500);
+        }
+
     }
 
 

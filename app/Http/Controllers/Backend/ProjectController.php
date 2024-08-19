@@ -1,176 +1,121 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
 use App\Models\Project;
-use App\Models\Service;
+use App\Models\Projectcategory;
+use Illuminate\Http\Request;
 use DataTables;
 
 class ProjectController extends Controller
 {
-    public function index_project_service(string $id)
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return view('backend.pages.service.project-section', compact('id'));
-    }
-
-
-    public function get_all_project_service(string $id)
-    {
-        // dd($id);
-        $projects = Project::where('service_id', $id)->get();
-
-        return DataTables::of($projects)
-                ->addIndexColumn()
-                ->addColumn('service-name', function ($project){
-                    return Service::where('id', $project->service_id)->first()->title;
-                })
-                ->addColumn('project_img', function ($project) {
-                    return '<img src="'. asset($project->project_img) .'" alt="" style="width: 65px;">';
-                })
-                ->addColumn('name', function ($project) {
-                    return '<span class="badge bg-label-info">'. $project->name .'</span>';
-                })
-                ->addColumn('url', function ($project) {
-                    if( !is_null($project->url) ){
-                        return '<span class="badge rounded-pill bg-label-primary">'. $project->url .'</span>';
-                    }
-                    else{
-                        return '<span class="badge rounded-pill bg-label-danger">N/A</span>';
-                    }
-                })
-                ->addColumn('status', function ($project) {
-                    if ($project->status == 1) {
-                        return '<span class="badge bg-label-primary cursor-pointer" id="status" data-id="'.$project->id.'" data-status="'.$project->status.'">Active</span>';
-                    } else {
-                        return '<span class="badge bg-label-danger cursor-pointer" id="status" data-id="'.$project->id.'" data-status="'.$project->status.'">Deactive</span>';
-                    }
-            })
-            ->addColumn('action', function ($project) {
-                return '
-                <div class="">
-                    <button type="button" class="btn_edit" id="editButton" data-id="' . $project->id . '" data-bs-toggle="modal" data-bs-target="#editModal">
-                        <i class="bx bx-edit-alt"></i>
-                    </button>
-
-                    <button type="button" id="deleteBtn" data-id="' . $project->id . '" class="btn_delete">
-                        <i class="bx bx-trash"></i>
-                    </button>
-                </div>';
-            })
-
-            ->rawColumns(['name', 'url', 'project_img', 'service-name', 'status', 'action'])
-            ->make(true);
-    }
-
-    public function store(Request $request)
-    {
-        // dd($request->all());
-
-        $project = new Project();
-
-        $project->service_id          = $project->service_id;
-        $project->name                = $request->name;
-        $project->url                 = $request->url;
-        $project->status              = $request->status;
-        $project->service_id          = $request->service_id;
-
-        if( $request->file('project_img') ){
-            $project_img = $request->file('project_img');
-
-            $imageName          = microtime('.') . '.' . $project_img->getClientOriginalExtension();
-            $imagePath          = 'public/backend/image/project/';
-            $project_img->move($imagePath, $imageName);
-
-            $project->project_img   = $imagePath . $imageName;
-        }
-
-        $project->save();
-
-        return response()->json(['message' => 'successfully Project Created', 'status' => true], 200);
+        $categories=Projectcategory::where('status','Active')->get();
+        return view('backend.content.project.index',['categories'=>$categories]);
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function adminProjectStatus(Request $request)
+    public function store(Request $request)
     {
-        $id = $request->id;
-        $Current_status = $request->status;
-
-        if ($Current_status == 1) {
-            $status = 0;
-        } else {
-            $status = 1;
+        if(empty($request->title)){
+            return response()->json('error', 200);
         }
+        $project =new Project();
+        $project->title =$request->title;
+        $project->category_id =$request->category_id;
+        $project->description =$request->description;
+        $projectimage = $request->file('image');
+        $name = time() . "_" . $projectimage->getClientOriginalName();
+        $uploadPath = ('public/images/project/');
+        $projectimage->move($uploadPath, $name);
+        $projectimageImgUrl = $uploadPath . $name;
+        $project->image = $projectimageImgUrl;
+        $project->save();
+        return response()->json($project, 200);
+    }
 
-        $page = Project::find($id);
-        $page->status = $status;
-        $page->save();
-
-        return response()->json(['message' => 'success', 'status' => $status, ]);
+    public function projectdata()
+    {
+        $projects = Project::with('projectcategories')->get();
+        return Datatables::of($projects)
+            ->addColumn('action', function ($projects) {
+                return '<a href="#" type="button" id="editProjectBtn" data-id="' . $projects->id . '"   class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editmainProject">Edit</a>
+                <a href="#" type="button" id="deleteProjectBtn" data-id="' . $projects->id . '" class="btn btn-danger btn-sm" >Delete</a>';
+            })
+            ->make(true);
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Http\Response
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $project = Project::find($id);
-        return response()->json(['success' => $project]);
+        $project = Project::findOrfail($id);
+        return response()->json($project, 200);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        // dd($request->all());
-
-        $project = Project::find($id);
-
-        $project->service_id          = $project->service_id;
-        $project->name                = $request->name;
-        $project->url                 = $request->url;
-        $project->status              = $request->status;
-        $project->service_id          = $request->service_id;
-
-        if( $request->file('project_img') ){
-            $project_img = $request->file('project_img');
-
-
-            if( !is_null($project->project_img) && file_exists($project->project_img) ){
-                unlink($project->project_img);
-             }
-
-            $imageName          = microtime('.') . '.' . $project_img->getClientOriginalExtension();
-            $imagePath          = 'public/backend/image/project/';
-            $project_img->move($imagePath, $imageName);
-
-            $project->project_img   = $imagePath . $imageName;
+        $project = Project::findOrfail($id);
+        if(empty($request->title)){
+            return response()->json('error', 200);
         }
-
-        $project->save();
-
-        return response()->json(['message'=> "success"], 200);
+        $project->title =$request->title;
+        $project->category_id =$request->category_id;
+        $project->description =$request->description;
+        if($request->image){
+            unlink($project->image);
+            $image = $request->file('image');
+            $name = time() . "_" . $image->getClientOriginalName();
+            $uploadPath = ('public/images/project/');
+            $image->move($uploadPath, $name);
+            $imageImgUrl = $uploadPath . $name;
+            $project->image = $imageImgUrl;
+        }
+        $project->update();
+        return response()->json($project, 200);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $project = Project::find($id);
-
-        if ( !is_null($project->project_img) ) {
-            if (file_exists($project->project_img)) {
-                unlink($project->project_img);
-            }
-        }
-
+        $project = Project::findOrfail($id);
         $project->delete();
+        return response()->json('success', 200);
+    }
 
-        return response()->json(['message' => 'Project has been deleted.'], 200);
+    public function statusupdate(Request $request)
+    {
+        $project = Project::where('id',$request->project_id)->first();
+        $project->status=$request->status;
+        $project->update();
+        return response()->json($project, 200);
     }
 }
