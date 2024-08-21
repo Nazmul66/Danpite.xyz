@@ -62,75 +62,83 @@
                         <div class="col-12">
                             <h4 class="text-center" style="text-transform: uppercase;font-weight: bold;text-decoration: underline;">See Our Latest Blogs</h4>
                         </div>
-                        <div class="col-12 col-lg-6 mb-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <img src="{{asset('public/frontend/img/')}}/bedroom.jpg" alt="">
-                                    <h6>Hire The Best Painting Contractor in Your Location</h6>
-                                    <p>
-                                        The market is flooded with painting contractors. If you have a plan to paint your home be very cautious before selecting the contractors. Painting contractors help to reduce your painting related headache and ensure smooth completion of the painting task.
-                                        The whole project will be charted and will be time bounded and professional. Here are some tips to select the best painting contractors in your locality.
-                                    </p>
 
-                                </div>
-                                <div class="card_footer">
-                                    {{-- Part-1 --}}
-                                    <div class="reaction_section">
-                                        <ul>
-                                            <li class="reaction_list">
-                                                <i class='bx bx-like'></i>
-                                                <span>Like</span>
-                                            </li>
-                                            <li class="reaction_list comment_line">
-                                                <i class='bx bx-comment-detail'></i>
-                                                <span>Comment</span>
-                                            </li>
-                                            <li class="reaction_list">
-                                                <i class='bx bx-share'></i>
-                                                <span>Share</span>
-                                            </li>
-                                        </ul>
+                        @foreach ( App\Models\Blog::where('status', 1)->get() as $blog)
+                            <div class="col-12 col-lg-8 offset-lg-2 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                       <div class="blog_content">
+                                            @if ( !empty($blog->image) )
+                                                <img src="{{ asset($blog->image)}}" alt="" class="blog_image">
+                                            @else
+                                                <img src="{{asset('public/frontend/img/')}}/bedroom.jpg" alt="" class="blog_image">
+                                            @endif
 
-                                        <div class="comment_field">
-                                            <form class="create_comment" method="POST">
-                                                @csrf
-
-                                                {{-- <input type="text" name="blog_id" value="{{ $blogPage->id }}" hidden>
-                                                <input type="text" name="blog_id" value="{{ $blogPage->id }}" hidden> --}}
-
-                                                <textarea name="comment" id="comment" class="comment_box_field" placeholder="Comment Here....."></textarea>
-
-                                                <div class="remove_comment">
-                                                    <i class='bx bx-x'></i>
-                                                </div>
-
-                                                <button type="submit" class="btn_comment_send"><i class='bx bxs-send'></i></button>
-                                            </form>
-                                        </div>
-
+                                            <h6>{{ $blog->title }}</h6>
+                                            <p>{{ $blog->description }}</p>
+                                       </div>
                                     </div>
 
-                                    {{-- Part-2 --}}
-                                    {{-- <div class="comment_show">
-                                        @if ( $blogComments->count() > 0 )
-                                            @foreach ($blogComments as $blogComment)
-                                                @if ( $blogComment->blog_ids == $blogPage->id )
-                                                        <div class="comment_content">
-                                                            <img src="{{ asset('public/asset/images/avatar.png') }}" alt="">
+                                    <div class="card_footer">
+                                        {{-- Part-1 --}}
+                                        <div class="reaction_section">
+                                            <ul>
+                                                <li class="reaction_list">
+                                                    <i class='bx bx-like'></i>
+                                                    <span>Like</span>
+                                                </li>
+                                                <li class="reaction_list comment_line">
+                                                    <i class='bx bx-comment-detail'></i>
+                                                    <span>Comment</span>
+                                                </li>
+                                                <li class="reaction_list">
+                                                    <i class='bx bx-share'></i>
+                                                    <span>Share</span>
+                                                </li>
+                                            </ul>
 
-                                                            <div class="comment_description">
-                                                                <h3>{{ ucwords($blogComment->name) }}</h3>
-                                                                <span>{{ Carbon\Carbon::parse($blogComment->created_at)->diffForHumans() }}</span>
-                                                                <p>{{ $blogComment->comment }}</p>
+                                            <div class="comment_field">
+                                                <form class="create_comment" method="POST">
+                                                    @csrf
+
+                                                    <input type="text" name="user_id" value="{{ $blog->id }}" hidden>
+                                                    <input type="text" name="blog_id" value="{{ $blog->id }}" hidden>
+
+                                                    <textarea name="comment" id="comment" class="comment_box_field" placeholder="Comment Here....."></textarea>
+
+                                                    <div class="remove_comment">
+                                                        <i class='bx bx-x'></i>
+                                                    </div>
+
+                                                    <button type="submit" class="btn_comment_send"><i class='bx bxs-send'></i></button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+
+                                        {{-- Part-2 --}}
+                                        <div class="comment_show">
+                                            @if ( $blogComments->count() > 0 )
+                                                @foreach ($blogComments as $blogComment)
+                                                    @if ( $blogComment->blog_ids == $blog->id )
+                                                            <div class="comment_content">
+                                                                <img src="{{ asset('public/asset/images/avatar.png') }}" alt="">
+
+                                                                <div class="comment_description">
+                                                                    <h3>{{ ucwords($blogComment->name) }}</h3>
+                                                                    <span>{{ Carbon\Carbon::parse($blogComment->created_at)->diffForHumans() }}</span>
+                                                                    <p>{{ $blogComment->comment }}</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </div> --}}
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
+
 
                     </div>
                 </div>

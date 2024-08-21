@@ -67,9 +67,9 @@
     </div>
 </footer>
 
-
+{{-- Chatbot --}}
 <div class="chatbot_service">
-    <img src="{{ asset('public/whatsapp.png') }}" class="msg_chat" >
+    <img src="{{ asset('public/girl_user.png') }}" class="msg_chat" >
 
     <div class="form_submission">
         <div class="message_cross">
@@ -98,5 +98,12 @@
                 Send Message
             </button>
         </form>
+    </div>
+
+    <div class="message">
+        <div class="remove_msg">
+            <i class='bx bx-x'></i>
+        </div>
+        <span>Hi, can i help you?</span>
     </div>
 </div>

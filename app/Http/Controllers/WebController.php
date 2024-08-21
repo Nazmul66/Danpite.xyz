@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\FronteBlog;
+use Illuminate\Support\Facades\DB;
 
 class WebController extends Controller
 {
@@ -102,10 +104,6 @@ class WebController extends Controller
         return view('frontend.content.pages.contact');
     }
 
-    public function blogs()
-    {
-        return view('frontend.content.pages.blogs');
-    }
 
     public function aboutus()
     {
@@ -122,5 +120,35 @@ class WebController extends Controller
     public function privacy()
     {
         return view('frontend.content.pages.privacy');
+    }
+    public function blogs()
+    {
+        $blogComments = DB::table('fronte_blogs')
+                    ->join('users', 'users.id', '=', 'fronte_blogs.user_id')
+                    ->join('blogs', 'blogs.id', '=', 'fronte_blogs.blog_id')
+                    ->select('users.name', 'fronte_blogs.status' , 'fronte_blogs.comment', 'fronte_blogs.id', 'fronte_blogs.created_at', 'blogs.id as blog_ids')
+                    ->where('fronte_blogs.status', 1)
+                    ->orderBy('fronte_blogs.id','desc')
+                    ->get();
+        return view('frontend.content.pages.blogs',  compact('blogComments'));
+    }
+    public function blogComments(Request $request)
+    {
+        // dd($request->all());
+        if( Auth::check() ){
+            $frontBlog = new FronteBlog();
+
+            $frontBlog->user_id = Auth::user()->id;
+            $frontBlog->blog_id = $request->blog_id;
+            $frontBlog->comment = $request->comment;
+            $frontBlog->status  = 1;
+
+            $frontBlog->save();
+
+            return response()->json(['status'=> true, 'data' => $frontBlog], 200);
+        }
+        else{
+            return response()->json(['status'=> false]);
+        }
     }
 }

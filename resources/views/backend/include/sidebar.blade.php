@@ -90,6 +90,19 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#blog" aria-expanded="false" aria-controls="auth">
+          <i class="typcn typcn-image-outline menu-icon"></i>
+          <span class="menu-title">Blogs</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="blog">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="{{ route('administrator.blogs.index') }}"> Blog </a></li>
+          </ul>
+        </div>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#solution" aria-expanded="false" aria-controls="auth">
           <i class="typcn typcn-lightbulb menu-icon"></i>
           <span class="menu-title">Solutions</span>
@@ -101,7 +114,7 @@
           </ul>
         </div>
     </li>
-      
+
 {{--   About Us   --}}
 
 
@@ -117,8 +130,8 @@
               </ul>
           </div>
       </li>
-      
-      
+
+
 {{--WorkSteps--}}
     <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#workstep" aria-expanded="false" aria-controls="auth">
@@ -132,7 +145,7 @@
           </ul>
         </div>
     </li>
-      
+
 {{--  Banners    --}}
       <li class="nav-item">
           <a class="nav-link" data-toggle="collapse" href="#banner" aria-expanded="false" aria-controls="auth">
@@ -146,7 +159,7 @@
               </ul>
           </div>
       </li>
-      
+
 {{--Facilities--}}
     <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#facility" aria-expanded="false" aria-controls="auth">
@@ -207,7 +220,7 @@
             </ul>
         </div>
     </li>
-      
+
 {{--   Appointment   --}}
 
       <li class="nav-item">
@@ -241,8 +254,8 @@
               </ul>
           </div>
       </li>
-      
-      
+
+
 
 {{--      <li class="nav-item">--}}
 {{--          <a class="nav-link" data-toggle="collapse" href="#painting" aria-expanded="false" aria-controls="auth">--}}

@@ -28,18 +28,19 @@ Route::get('all-services', [WebController::class, 'allServices']);
 Route::get('interior', [WebController::class, 'interior']);
 Route::get('priceing', [WebController::class, 'priceing']);
 Route::get('contact-us', [WebController::class, 'contact']);
-Route::get('daily-blogs', [WebController::class, 'blogs']);
 Route::get('about-us', [WebController::class, 'aboutus']);
 Route::get('services', [WebController::class, 'services']);
 Route::get('terms-of-service', [WebController::class, 'terms']);
 Route::get('privacy-policy', [WebController::class, 'privacy']);
+
+Route::get('daily-blogs', [WebController::class, 'blogs']);
+Route::post('/blogs/comments', [WebController::class, 'blogComments'])->name('blog.comments');
 
 Route::post('support-service', [SupportServiceController::class, 'SupportService'])->name('support.service');
 
 // Blog
 // Route::get('/blog', [BlogController::class, 'index']);
 // Route::get('/blogs/{slug}', [BlogController::class, 'blogDetails'])->name('single.blog');
-Route::post('/blogs/comments', [BlogController::class, 'blogComments'])->name('blog.comments');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

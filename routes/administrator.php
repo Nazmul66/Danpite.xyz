@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\ProjectcategoryController;
 use App\Http\Controllers\Backend\PaintingtypeController;
 use App\Http\Controllers\Backend\paintingcostController;
+use App\Http\Controllers\Backend\BlogController;
 
 
 /*
@@ -58,11 +59,18 @@ Route::group(['prefix'=>'administrator','middleware' => ['auth.administrator:adm
     Route::get('administrator/get/data', [AdministratorController::class, 'administratordata'])->name('administrator.administrator.data');
     Route::put('administrator/status', [AdministratorController::class,'statusupdate']);
 
+    //Blogs
+    Route::resource('blogs', BlogController::class,['names'=>'administrator.blogs']);
+    Route::get('blog/get/data', [BlogController::class, 'blogsData'])->name('administrator.blog.data');
+    Route::post('blog/{id}', [BlogController::class, 'update']);
+    Route::put('blog/status', [BlogController::class, 'statusupdate'])->name('blog.status');
+
     //Sliders
     Route::resource('sliders', SliderController::class,['names'=>'administrator.sliders']);
     Route::get('slider/get/data', [SliderController::class, 'sliderdata'])->name('administrator.slider.data');
     Route::post('slider/{id}', [SliderController::class, 'update']);
     Route::put('slider/status', [SliderController::class, 'statusupdate']);
+
     //Solutions
     Route::resource('solutions', SolutionController::class,['names'=>'administrator.solutions']);
     Route::get('solution/get/data', [SolutionController::class, 'solutiondata'])->name('administrator.solution.data');

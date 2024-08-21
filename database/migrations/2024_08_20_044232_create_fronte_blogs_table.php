@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('fronte_blogs', function (Blueprint $table) {
             $table->id();
-            $table->text('image')->nullable();
-            $table->text('title')->nullable();
-            $table->text('description')->nullable();
+            $table->integer('user_id');
+            $table->integer('blog_id');
+            $table->text('comment');
             $table->integer('status')->default(1)->comment('1=active, 2=inactive');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('fronte_blogs');
     }
 };
